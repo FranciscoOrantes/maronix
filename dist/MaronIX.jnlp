@@ -8,7 +8,7 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="MaronIX.jar" size="406048" download="eager" />
+    <jar href="MaronIX.jar" size="416631" download="eager" />
     <jar href="lib\AbsoluteLayout.jar" size="2847" download="eager" />
     <jar href="lib\barbecue-1.5-beta1.jar" size="91079" download="eager" />
     <jar href="lib\barcode4j-2.0.jar" size="256468" download="eager" />

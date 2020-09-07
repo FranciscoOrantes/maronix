@@ -95,7 +95,7 @@ public class Reportes {
 
             view.setVisible(true);
         } catch (Exception e) {
-            System.err.println("Heey " + e);
+            System.err.println("Heey2 " + e);
 
         }
     }

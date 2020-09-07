@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="158" pageHeight="600" columnWidth="118" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4a70272f-03f2-4368-a00d-4d3668ee449e">
 	<property name="ireport.zoom" value="3.452271214393106"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="1036"/>
+	<property name="ireport.y" value="124"/>
 	<subDataset name="dataset1" uuid="4fed6268-cc15-4d32-8f12-af0af241248b">
 		<field name="_THIS" class="java.lang.Integer"/>
 	</subDataset>
@@ -75,7 +75,7 @@
 				<textElement textAlignment="Center">
 					<font size="6"/>
 				</textElement>
-				<text><![CDATA[TEL 962 239 1426]]></text>
+				<text><![CDATA[TEL 962 707 4090]]></text>
 			</staticText>
 		</band>
 	</title>
