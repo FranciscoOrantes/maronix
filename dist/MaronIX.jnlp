@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp spec="1.0" xmlns:jfx="http://javafx.com" href="MaronIX.jnlp">
+  <information>
+    <title>MaronIX</title>
+    <vendor>Francisco</vendor>
+    <description>null</description>
+    <offline-allowed/>
+  </information>
+  <resources>
+    <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
+    <jar href="MaronIX.jar" size="406048" download="eager" />
+    <jar href="lib\AbsoluteLayout.jar" size="2847" download="eager" />
+    <jar href="lib\barbecue-1.5-beta1.jar" size="91079" download="eager" />
+    <jar href="lib\barcode4j-2.0.jar" size="256468" download="eager" />
+    <jar href="lib\commons-codec-1.6-javadoc.jar" size="357085" download="eager" />
+    <jar href="lib\commons-codec-1.6-sources.jar" size="243982" download="eager" />
+    <jar href="lib\commons-codec-1.6-tests.jar" size="214961" download="eager" />
+    <jar href="lib\commons-codec-1.6.jar" size="232771" download="eager" />
+    <jar href="lib\commons-collections-3.2.1.jar" size="575389" download="eager" />
+    <jar href="lib\commons-digester-2.1.jar" size="196768" download="eager" />
+    <jar href="lib\commons-logging-1.2.jar" size="61829" download="eager" />
+    <jar href="lib\groovy-2.4.5.jar" size="4553023" download="eager" />
+    <jar href="lib\itext-pdfa-5.5.12.jar" size="118379" download="eager" />
+    <jar href="lib\itextpdf-5.5.12.jar" size="2320211" download="eager" />
+    <jar href="lib\jasperreports-6.0.0.jar" size="5144510" download="eager" />
+    <jar href="lib\jdom.jar" size="153253" download="eager" />
+    <jar href="lib\mysql-connector-java-5.1.23-bin.jar" size="827921" download="eager" />
+  </resources>
+  <applet-desc  width="800" height="600" main-class="com.javafx.main.NoJavaFXFallback"  name="MaronIX" >
+    <param name="requiredFXVersion" value="8.0+"/>
+  </applet-desc>
+  <jfx:javafx-desc  width="800" height="600" main-class="maronix.MaronIX"  name="MaronIX" />
+  <update check="always"/>
+</jnlp>

@@ -1,0 +1,9 @@
+
+
+.hover_border:hover{
+    -fx-border-color: #ce93d8;
+    -fx-border-width: 0px 0px 0px 4px;
+    -fx-background-color: #ce93d8;
+    -fx-cursor: hand;
+    -fx-font: "QuickSand";    
+}

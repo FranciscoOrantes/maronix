@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane id="AnchorPane" prefHeight="279.0" prefWidth="236.0" stylesheets="@../styles/login.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controlador.CobroController">
+   <children>
+      <Text layoutX="19.0" layoutY="109.0" strokeType="OUTSIDE" strokeWidth="0.0" text="TOTAL:">
+         <font>
+            <Font name="Segoe UI Bold" size="14.0" />
+         </font></Text>
+      <Text fx:id="totalText" layoutX="67.0" layoutY="108.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="148.99999862909317" />
+      <Text layoutX="19.0" layoutY="155.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PAGO:">
+         <font>
+            <Font name="Segoe UI Bold" size="14.0" />
+         </font></Text>
+      <TextField fx:id="pagoTxt" layoutX="76.0" layoutY="138.0" onKeyTyped="#txtNumerico" />
+      <Text layoutX="19.0" layoutY="196.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CAMBIO:">
+         <font>
+            <Font name="Segoe UI Bold" size="14.0" />
+         </font></Text>
+      <Text fx:id="cambioText" layoutX="80.0" layoutY="195.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="141.0" />
+      <Button layoutX="71.0" layoutY="228.0" mnemonicParsing="false" onAction="#imprimirTicket" style="-fx-cursor: hand;" text="Imprimir ticket" />
+      <Text fill="#4f78b7" layoutX="79.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="VENTA">
+         <font>
+            <Font name="Segoe UI Bold" size="24.0" />
+         </font>
+      </Text>
+   </children>
+</AnchorPane>

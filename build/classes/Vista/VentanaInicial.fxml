@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane fx:id="panePrincipal" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="605.0" prefWidth="978.0" stylesheets="@../styles/style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controlador.VentanaInicialController">
+   <top>
+      <HBox BorderPane.alignment="CENTER">
+         <children>
+            <HBox alignment="CENTER_LEFT" maxWidth="-Infinity" prefHeight="48.0" prefWidth="187.0" style="-fx-background-color: white;">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="root" text="MARÓNIX">
+                     <HBox.margin>
+                        <Insets left="20.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font name="Segoe UI Bold" size="23.0" />
+                     </font>
+                  </Text>
+               </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <padding>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </padding></HBox>
+            <HBox alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
+               <children>
+                  <HBox alignment="TOP_RIGHT" prefHeight="35.0" prefWidth="792.0" style="-fx-background-color: WHITE; -fx-border-color: #ce93d8; -fx-border-width: 0 0 2 2;" HBox.hgrow="ALWAYS">
+                     <children>
+                        <HBox alignment="CENTER_LEFT" prefHeight="72.0" prefWidth="490.0" HBox.hgrow="ALWAYS">
+                           <children>
+                              <ImageView fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../Imagenes/usuario.png" />
+                                 </image>
+                              </ImageView>
+                              <Text fx:id="txtNombreUsuario" strokeType="OUTSIDE" strokeWidth="0.0" text="Bienvenido Cajero: Francisco Moisés Orantes Trejo" wrappingWidth="363.478515625">
+                                 <HBox.margin>
+                                    <Insets left="10.0" />
+                                 </HBox.margin>
+                              </Text>
+                           </children>
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                           <padding>
+                              <Insets left="10.0" right="10.0" />
+                           </padding>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" prefHeight="70.0" prefWidth="308.0">
+                           <children>
+                              <ImageView fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../Imagenes/calendario.png" />
+                                 </image>
+                                 <HBox.margin>
+                                    <Insets left="10.0" />
+                                 </HBox.margin>
+                              </ImageView>
+                              <Text fx:id="txtFecha" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: QuickSand;" styleClass="root" text="23 de agosto de 2020">
+                                 <HBox.margin>
+                                    <Insets left="10.0" right="10.0" />
+                                 </HBox.margin>
+                              </Text>
+                              <HBox alignment="CENTER_LEFT" onMouseClicked="#cerrarSesion" prefHeight="100.0" prefWidth="200.0" styleClass="hover_border">
+                                 <children>
+                                    <ImageView fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../Imagenes/cerrar-sesion.png" />
+                                       </image>
+                                       <HBox.margin>
+                                          <Insets left="10.0" right="10.0" />
+                                       </HBox.margin>
+                                    </ImageView>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: QuickSand;" styleClass="root" text="Cerrar sesión">
+                                       <HBox.margin>
+                                          <Insets />
+                                       </HBox.margin>
+                                    </Text>
+                                 </children>
+                              </HBox>
+                           </children>
+                           <padding>
+                              <Insets left="10.0" right="10.0" />
+                           </padding>
+                        </HBox>
+                     </children>
+                  </HBox>
+               </children>
+            </HBox>
+         </children>
+      </HBox>
+   </top>
+   <left>
+      <VBox maxWidth="-Infinity" prefWidth="186.0" style="-fx-background-color: WHITE; -fx-border-color: #ce93d8; -fx-border-width: 2 2 0 0;" BorderPane.alignment="CENTER">
+         <children>
+            <HBox onMouseClicked="#cambiarVista" styleClass="hover_border">
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+               <VBox.margin>
+                  <Insets top="40.0" />
+               </VBox.margin>
+               <children>
+                  <ImageView fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Imagenes/caja.png" />
+                     </image>
+                  </ImageView>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="root" text="Productos">
+                     <HBox.margin>
+                        <Insets left="10.0" right="10.0" />
+                     </HBox.margin>
+                  </Text>
+               </children>
+            </HBox>
+            <HBox onMouseClicked="#cambiarVistaVentas" styleClass="hover_border">
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+               <VBox.margin>
+                  <Insets top="40.0" />
+               </VBox.margin>
+               <children>
+                  <ImageView fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Imagenes/compras.png" />
+                     </image>
+                  </ImageView>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="root" text="Ventas">
+                     <HBox.margin>
+                        <Insets left="10.0" right="10.0" />
+                     </HBox.margin>
+                  </Text>
+               </children>
+            </HBox>
+            <HBox onMouseClicked="#cambiarVistaCorteCaja" styleClass="hover_border">
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+               <VBox.margin>
+                  <Insets top="40.0" />
+               </VBox.margin>
+               <children>
+                  <ImageView fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Imagenes/reportar.png" />
+                     </image>
+                  </ImageView>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="root" text="Reportes">
+                     <HBox.margin>
+                        <Insets left="10.0" right="10.0" />
+                     </HBox.margin>
+                  </Text>
+               </children>
+            </HBox>
+            <HBox fx:id="hBoxUsuarios" onMouseClicked="#cambiarVistaUsuarios" styleClass="hover_border">
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+               <VBox.margin>
+                  <Insets top="40.0" />
+               </VBox.margin>
+               <children>
+                  <ImageView fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Imagenes/grupo.png" />
+                     </image>
+                  </ImageView>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="root" text="Usuarios">
+                     <HBox.margin>
+                        <Insets left="10.0" right="10.0" />
+                     </HBox.margin>
+                  </Text>
+               </children>
+            </HBox>
+            <HBox fx:id="hBoxProveedores" layoutX="10.0" layoutY="290.0" onMouseClicked="#cambiarVistaProveedores" styleClass="hover_border">
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+               <children>
+                  <ImageView fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Imagenes/servicio.png" />
+                     </image>
+                  </ImageView>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="root" text="Proveedores">
+                     <HBox.margin>
+                        <Insets left="10.0" right="10.0" />
+                     </HBox.margin>
+                  </Text>
+               </children>
+               <VBox.margin>
+                  <Insets top="40.0" />
+               </VBox.margin>
+            </HBox>
+         </children>
+      </VBox>
+   </left>
+   <center>
+      <AnchorPane prefHeight="536.0" prefWidth="782.0" style="-fx-background-color: WHITE;" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="381.0" fitWidth="440.0" layoutX="171.0" layoutY="91.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="63.0" AnchorPane.leftAnchor="171.0" AnchorPane.rightAnchor="240.0" AnchorPane.topAnchor="91.0">
+               <image>
+                  <Image url="@../Imagenes/icono.jpeg" />
+               </image>
+            </ImageView>
+            <Text fill="#e254fc" layoutX="207.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PUNTO DE VENTA">
+               <font>
+                  <Font name="Segoe UI Bold" size="36.0" />
+               </font>
+            </Text>
+         </children></AnchorPane>
+   </center>
+</BorderPane>
