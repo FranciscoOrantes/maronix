@@ -5,12 +5,18 @@
  */
 package Controlador;
 
+import static Controlador.ProductosController.id;
+import Modelo.Productos;
 import Modelo.Proveedores;
 import Modelo.Usuarios;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
@@ -20,7 +26,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -29,6 +37,7 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 /**
  * FXML Controller class
@@ -43,6 +52,8 @@ public class ProveedoresController implements Initializable {
     public Button btnEditar;
     @FXML
     public Button btnBaja;
+    @FXML
+    private Button btnEliminar;
     @FXML
     private TableView<Proveedores> tablaProveedores;
     @FXML
@@ -78,10 +89,32 @@ public class ProveedoresController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         EnviarConEnter();
         proveedores = FXCollections.observableArrayList();
-        this.inicializarTablaProveedores();
+        try {
+            this.inicializarTablaProveedores();
+        } catch (SQLException ex) {
+            Logger.getLogger(ProveedoresController.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         btnEditar.setDisable(true);
         btnBaja.setDisable(true);
+        btnEliminar.setDisable(true);
+        TimerTask timerTask = new TimerTask() {
+            public void run() {
+                try {
+                    inicializarTablaProveedores();
+                } catch (SQLException ex) {
+                    Logger.getLogger(ProveedoresController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                btnEditar.setDisable(true);
+                btnBaja.setDisable(true);
+                btnEliminar.setDisable(true);
+            }
+        };
+
+        // Aquí se pone en marcha el timer cada segundo. 
+        Timer timer = new Timer();
+        // Dentro de 0 milisegundos avísame cada 1 minutos 
+        timer.scheduleAtFixedRate(timerTask, 0, 15000);
 
     }
 
@@ -89,7 +122,7 @@ public class ProveedoresController implements Initializable {
         titulo = "Registrar Proveedor";
         tituloBoton = "Registrar";
         loaderInicioAdmin = new FXMLLoader(getClass().getResource("/Vista/RegistroProveedor.fxml"));
-        
+
         Parent root1 = (Parent) loaderInicioAdmin.load();
         ventanaInicio = new Stage();
         ProveedoresController.ventanaInicio.getIcons().add(new Image(String.valueOf(getClass().getResource(path))));
@@ -98,7 +131,7 @@ public class ProveedoresController implements Initializable {
         ventanaInicio.show();
     }
 
-    public void inicializarTablaProveedores() {
+    public void inicializarTablaProveedores() throws SQLException {
 
         proveedores = FXCollections.observableArrayList();
         Proveedores.llenarInfoProveedores(proveedores);
@@ -126,6 +159,7 @@ public class ProveedoresController implements Initializable {
     public void seleccionProveedor() {
         btnEditar.setDisable(false);
         btnBaja.setDisable(false);
+        btnEliminar.setDisable(false);
         Proveedores proveedor = tablaProveedores.getSelectionModel().getSelectedItem();
         idProveedor = proveedor.getId();
         razon_social = proveedor.getRazon_socialT();
@@ -177,12 +211,31 @@ public class ProveedoresController implements Initializable {
         }
         btnEditar.setDisable(true);
         btnBaja.setDisable(true);
+        btnEliminar.setDisable(true);
     }
 
-    public void cleanSelect() {
+    public void cleanSelect() throws SQLException {
         btnEditar.setDisable(true);
         btnBaja.setDisable(true);
+        btnEliminar.setDisable(true);
         tablaProveedores.getSelectionModel().clearSelection();
         inicializarTablaProveedores();
+    }
+
+    public void eliminar() throws SQLException {
+        Alert dialogoAlerta = new Alert(Alert.AlertType.CONFIRMATION, "Confirmación de eliminado de proveedor", ButtonType.YES, ButtonType.NO);
+        dialogoAlerta.setTitle("Advertencia");
+        dialogoAlerta.setHeaderText("SE ELIMINARÁ EL PROVEEDOR SELECCIONADO");
+        dialogoAlerta.setContentText("Si desea continuar el proveedor quedará eliminado");
+        dialogoAlerta.initStyle(StageStyle.UTILITY);
+        dialogoAlerta.showAndWait();
+        if (dialogoAlerta.getResult() == ButtonType.YES) {
+            Proveedores proveedor = new Proveedores();
+            proveedor.eliminar(idProveedor);
+            inicializarTablaProveedores();
+            cleanSelect();
+        } else {
+            cleanSelect();
+        }
     }
 }

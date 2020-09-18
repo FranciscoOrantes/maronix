@@ -12,6 +12,7 @@ import com.itextpdf.text.Image;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.Barcode128;
 import com.itextpdf.text.pdf.Barcode39;
+import com.itextpdf.text.pdf.BarcodeEAN;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.awt.Color;
 import java.io.FileNotFoundException;
@@ -48,22 +49,12 @@ public class MaronIX extends Application {
         ventanaLogin.show();
         
               
-             /*   try {
-                     Document doc = new Document();
-                    PdfWriter pdf = PdfWriter.getInstance(doc, new FileOutputStream("codigos.pdf"));
-                    doc.open();
-                    
-                    Barcode128 code128 = new Barcode128();
-                    code128.setCode("1234567890123");
-                    Image img128 = code128.createImageWithBarcode(pdf.getDirectContent(), BaseColor.BLACK, BaseColor.BLACK);
-                    doc.add(img128);
-                    doc.close();
-                } catch (DocumentException ex) {
-                    Logger.getLogger(MaronIX.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (FileNotFoundException ex) {
-                    Logger.getLogger(MaronIX.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }*/
+             
+            
+    /*BarcodeEAN codeEAN = new BarcodeEAN();
+    codeEAN.setCodeType(codeEAN.EAN13);
+    codeEAN.setCode("9780201615883");
+    javafx.scene.image.Image imageEAN = codeEAN.createImageWithBarcode(cb, null, null);*/
  
 
     }

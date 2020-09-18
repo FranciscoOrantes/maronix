@@ -26,22 +26,22 @@
             <Font name="Segoe UI" size="12.0" />
          </font></TextField>
       
-      <Button fx:id="btnRegistrar" layoutX="94.0" layoutY="293.0" mnemonicParsing="false" onAction="#registrar" prefHeight="33.0" prefWidth="114.0" text="Registrar">
+      <Button fx:id="btnRegistrar" layoutX="94.0" layoutY="293.0" mnemonicParsing="false" onAction="#registrar" prefHeight="33.0" prefWidth="114.0" style="-fx-background-color: #ce93d8; -fx-cursor: hand;" text="Registrar" textFill="WHITE">
          <font>
-            <Font name="Segoe UI" size="12.0" />
+            <Font name="Segoe UI Bold" size="12.0" />
          </font>
       </Button>
-      <Button fx:id="btnLimpiar" layoutX="248.0" layoutY="293.0" mnemonicParsing="false" onAction="#limpiar" prefHeight="33.0" prefWidth="114.0" text="Limpiar">
+      <Button fx:id="btnLimpiar" layoutX="248.0" layoutY="293.0" mnemonicParsing="false" onAction="#limpiar" prefHeight="33.0" prefWidth="114.0" style="-fx-background-color: #ce93d8; -fx-cursor: hand;" text="Limpiar" textFill="WHITE">
          <font>
-            <Font name="Segoe UI" size="12.0" />
+            <Font name="Segoe UI Bold" size="12.0" />
          </font>
          <effect>
             <ColorAdjust />
          </effect>
       </Button>
-      <Text fx:id="textTitulo" fill="#4f78b7" layoutX="97.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Registrar Proveedor">
+      <Text fx:id="textTitulo" fill="#ce93d8" layoutX="97.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Registrar Proveedor">
          <font>
-            <Font name="Segoe UI" size="22.0" />
+            <Font name="Segoe UI Bold" size="22.0" />
          </font>
       </Text>
       <Text layoutX="21.0" layoutY="97.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Razón social">

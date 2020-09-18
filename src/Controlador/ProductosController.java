@@ -9,13 +9,20 @@ import static Controlador.ProveedoresController.loaderInicioAdmin;
 import static Controlador.ProveedoresController.titulo;
 import Modelo.InicioSesion;
 import Modelo.Productos;
+import static Modelo.Productos.respuesta;
 import Modelo.Proveedores;
 import Modelo.Reportes;
+import java.awt.Desktop;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
@@ -25,9 +32,12 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -35,7 +45,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 /**
  * FXML Controller class
@@ -49,26 +61,30 @@ public class ProductosController implements Initializable {
     @FXML
     private TextField txtBusqueda;
     @FXML
-    private TableView<Productos> tablaProductos;
+    public TableView<Productos> tablaProductos;
     @FXML
-    private TableColumn codigoCol;
+    public TableColumn codigoCol;
 
     @FXML
-    private TableColumn descripcionCol;
+    public TableColumn descripcionCol;
     @FXML
-    private TableColumn precioCol;
+    public TableColumn precioCol;
     @FXML
-    private TableColumn cantidadCol;
+    public TableColumn cantidadCol;
     @FXML
-    private TableColumn proveedorCol;
+    public TableColumn proveedorCol;
     @FXML
-    private TableColumn statusCol;
+    public TableColumn statusCol;
     @FXML
     private Button btnEditar;
     @FXML
     private Button btnCodigo;
     @FXML
+    private Button btnEliminar;
+    @FXML
     private Button btnBaja;
+    @FXML
+    private AnchorPane pane;
     public static String codigo, descripcion, proveedor;
     public static Double precio;
     public static int cantidad, id;
@@ -86,14 +102,39 @@ public class ProductosController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         EnviarConEnter();
         productos = FXCollections.observableArrayList();
-        this.inicializarTablaProductos();
+        try {
+            this.inicializarTablaProductos();
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductosController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         btnEditar.setDisable(true);
         btnBaja.setDisable(true);
         btnCodigo.setDisable(true);
+        btnEliminar.setDisable(true);
         if (InicioSesion.rol.equals("Cajero")) {
             btnBaja.setVisible(false);
             btnEditar.setVisible(false);
+            btnEliminar.setVisible(false);
         }
+        TimerTask timerTask = new TimerTask() {
+            public void run() {
+                try {
+                    inicializarTablaProductos();
+                } catch (SQLException ex) {
+                    Logger.getLogger(ProductosController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                btnEditar.setDisable(true);
+                btnBaja.setDisable(true);
+                btnCodigo.setDisable(true);
+                btnEliminar.setDisable(true);
+            }
+        };
+
+        // Aquí se pone en marcha el timer cada segundo. 
+        Timer timer = new Timer();
+        // Dentro de 0 milisegundos avísame cada 1 minutos 
+        timer.scheduleAtFixedRate(timerTask, 0, 15000);
+
     }
 
     public void abrirVentanaRegistro() throws IOException {
@@ -111,7 +152,7 @@ public class ProductosController implements Initializable {
         ventanaInicio.show();
     }
 
-    public void inicializarTablaProductos() {
+    public void inicializarTablaProductos() throws SQLException {
         productos = FXCollections.observableArrayList();
         Productos.llenarInfoProductos(productos);
         tablaProductos.setItems(productos);
@@ -159,6 +200,7 @@ public class ProductosController implements Initializable {
         btnEditar.setDisable(false);
         btnBaja.setDisable(false);
         btnCodigo.setDisable(false);
+        btnEliminar.setDisable(false);
         Productos producto = tablaProductos.getSelectionModel().getSelectedItem();
         id = producto.getId();
         codigo = producto.getCodigoT();
@@ -173,11 +215,12 @@ public class ProductosController implements Initializable {
             btnBaja.setText("Reactivar producto");
         }
     }
+
     public void actualizarProducto() throws IOException {
         tituloText = "Actualizar Producto";
         tituloBoton = "Actualizar";
         tituloCombo = proveedor;
-        loaderInicioAdmin = new FXMLLoader(getClass().getResource("/Vista/RegistroProducto.fxml"));
+        loaderInicioAdmin = new FXMLLoader(getClass().getResource("/Vista/ActualizacionProducto.fxml"));
         Parent root1 = (Parent) loaderInicioAdmin.load();
         ventanaInicio = new Stage();
         ProductosController.ventanaInicio.getIcons().add(new Image(String.valueOf(getClass().getResource(path))));
@@ -185,6 +228,7 @@ public class ProductosController implements Initializable {
         ventanaInicio.setResizable(false);
         ventanaInicio.show();
     }
+
     public void bajaProducto() throws SQLException {
         Productos producto = new Productos();
         if (btnBaja.getText().equals("Dar de baja")) {
@@ -196,18 +240,43 @@ public class ProductosController implements Initializable {
         }
         btnEditar.setDisable(true);
         btnBaja.setDisable(true);
+        btnEliminar.setDisable(true);
     }
-    public void cleanSelect() {
+
+    public void cleanSelect() throws SQLException {
         btnEditar.setDisable(true);
         btnBaja.setDisable(true);
         btnCodigo.setDisable(true);
+        btnEliminar.setDisable(true);
         tablaProductos.getSelectionModel().clearSelection();
         inicializarTablaProductos();
     }
-    public void generarCodigo() {
+
+    public void generarCodigo(Event event) throws FileNotFoundException, IOException, SQLException {
+        Node source = (Node) event.getSource();
+        Stage stage = (Stage) source.getScene().getWindow();
+        Productos producto = new Productos();
+        String ruta = producto.obtenerRutaCodigo(id);
         Reportes reportes = new Reportes();
-        System.out.println(codigo);
-        reportes.generarCodigoBarras(codigo, descripcion);
+        reportes.abrirCodigoBarrasEnMenu(id,codigo,descripcion,cantidad,stage,producto,precio,ruta);
+
+    }
+
+    public void eliminar() throws SQLException {
+        Alert dialogoAlerta = new Alert(Alert.AlertType.CONFIRMATION, "Confirmación de eliminado de producto", ButtonType.YES, ButtonType.NO);
+        dialogoAlerta.setTitle("Advertencia");
+        dialogoAlerta.setHeaderText("SE ELIMINARÁ EL PRODUCTO SELECCIONADO");
+        dialogoAlerta.setContentText("Si desea continuar el producto quedará eliminado");
+        dialogoAlerta.initStyle(StageStyle.UTILITY);
+        dialogoAlerta.showAndWait();
+        if (dialogoAlerta.getResult() == ButtonType.YES) {
+            Productos producto = new Productos();
+            producto.eliminar(id);
+            inicializarTablaProductos();
+            cleanSelect();
+        } else {
+            cleanSelect();
+        }
     }
 
 }

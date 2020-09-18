@@ -5,6 +5,7 @@
  */
 package Modelo;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,6 +18,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 /**
@@ -24,13 +26,14 @@ import javafx.stage.StageStyle;
  * @author Francisco
  */
 public class Productos {
-
+    public static String actualizacionTabla;
     private String nombre;
     private String descripcion;
     private double precio;
     private int cantidad;
     private String codigo;
     private String codigo_barras;
+    public static String respuesta;
 
     public String getPresentacion() {
         return presentacion;
@@ -253,26 +256,25 @@ public class Productos {
         this.statusT = new SimpleStringProperty(status);
     }
 
-    public void registrarProductos() {
-        
-        codigo_barras=generarCodigoBarras();
+    public void registrarProductos(String codigo, String rutaCodigo) {
+
         Conexion con = new Conexion();
         Connection st = con.conectate();
         try {
 
             Statement execute = st.createStatement();
-            PreparedStatement pst = st.prepareStatement("INSERT INTO producto(descripcion,precio,cantidad,codigo_barras,proveedor_id,status) VALUES(?,?,?,?,?,?)");
+            PreparedStatement pst = st.prepareStatement("INSERT INTO producto(descripcion,precio,cantidad,codigo_barras,proveedor_id,status,rutaCodigo) VALUES(?,?,?,?,?,?,?)");
 
             pst.setString(1, getDescripcion());
             pst.setDouble(2, getPrecio());
             pst.setInt(3, getCantidad());
-            pst.setString(4, codigo_barras);
-
+            pst.setString(4, codigo);
             pst.setInt(5, getIdProveedor());
             pst.setString(6, "Alta");
+            pst.setString(7, rutaCodigo);
             int res = pst.executeUpdate();
             if (res > 0) {
-                mensajeExito();
+                mensajeExito(rutaCodigo);
             }
 
         } catch (Exception e) {
@@ -280,21 +282,26 @@ public class Productos {
         }
     }
 
-    public void mensajeExito() {
-        Alert dialogoAlerta = new Alert(Alert.AlertType.CONFIRMATION,"Confirmación de impresión de código",ButtonType.YES, ButtonType.NO);
+    public void mensajeExito(String direccion) throws IOException {
+        Alert dialogoAlerta = new Alert(Alert.AlertType.CONFIRMATION, "Confirmación de impresión de código", ButtonType.YES, ButtonType.NO);
         dialogoAlerta.setTitle("Registro de productos");
         dialogoAlerta.setHeaderText("Ha registrado un producto con éxito");
-        dialogoAlerta.setContentText("Desea imprimir su código de barras en este momento?");
-        
+        dialogoAlerta.setContentText("El código de barras ha sido guardado con éxito, desea imprimir su código de barras en este momento?");
+
         dialogoAlerta.initStyle(StageStyle.UTILITY);
         dialogoAlerta.showAndWait();
         if (dialogoAlerta.getResult() == ButtonType.YES) {
-          Reportes reportes = new Reportes();
-          reportes.generarCodigoBarras(codigo_barras, getDescripcion());
-}
+            respuesta = "Si";
+            Reportes reportes = new Reportes();
+            reportes.abrirCodigoDeBarras(direccion);
+            actualizacionTabla="Si";
+        } else {
+            respuesta = "No";
+            actualizacionTabla="Si";
+        }
     }
 
-    public static void llenarInfoProductos(ObservableList<Productos> lista) {
+    public static void llenarInfoProductos(ObservableList<Productos> lista) throws SQLException {
         Conexion con = new Conexion();
         Connection st = con.conectate();
         ResultSet rs;
@@ -326,6 +333,7 @@ public class Productos {
             System.err.println("excetpcion " + e);
 
         }
+        st.close();
     }
 
     public static boolean filtradoCodigo(ObservableList<Productos> lista, int cantidad, String codigo) throws SQLException {
@@ -387,7 +395,7 @@ public class Productos {
         ResultSet rs;
         Statement execute = st.createStatement();
         PreparedStatement pst = st.prepareStatement(
-                "SELECT * FROM producto INNER JOIN proveedor ON producto.proveedor_id=proveedor.id WHERE producto.codigo_barras LIKE '%" + codigo + "%'" + " OR producto.nombre LIKE '%" + codigo + "%'");
+                "SELECT * FROM producto INNER JOIN proveedor ON producto.proveedor_id=proveedor.id WHERE producto.codigo_barras LIKE '%" + codigo + "%'" + " OR producto.descripcion LIKE '%" + codigo + "%'");
 
         rs = pst.executeQuery();
         while (rs.next()) {
@@ -405,20 +413,21 @@ public class Productos {
         }
     }
 
-    public void actualizar(int id, String descripcion, Double precio, int cantidad, int proveedor_id) throws SQLException {
+    public void actualizar(int id, String descripcion, Double precio, int cantidad, int proveedor_id,String ruta) throws SQLException {
         Conexion con = new Conexion();
         Connection st = con.conectate();
 
         try {
             Statement execute = st.createStatement();
             PreparedStatement pst = st.prepareStatement("UPDATE producto SET descripcion = ?, precio = ?, cantidad = ?"
-                    + ", proveedor_id = ? WHERE id = ?");
+                    + ", proveedor_id = ?, rutaCodigo= ? WHERE id = ?");
 
             pst.setString(1, descripcion);
-            pst.setDouble(3, precio);
-            pst.setInt(4, cantidad);
+            pst.setDouble(2, precio);
+            pst.setInt(3, cantidad);
 
-            pst.setInt(5, proveedor_id);
+            pst.setInt(4, proveedor_id);
+            pst.setString(5, ruta);
             pst.setInt(6, id);
 
             int res = pst.executeUpdate();
@@ -429,6 +438,7 @@ public class Productos {
                 dialogoAlerta.setHeaderText("Se han actualizado los Datos");
                 dialogoAlerta.initStyle(StageStyle.UTILITY);
                 dialogoAlerta.showAndWait();
+                actualizacionTabla="Si";
             }
 
         } catch (Exception e) {
@@ -511,16 +521,131 @@ public class Productos {
         st.close();
     }
 
-    public String generarCodigoBarras() {
-        char[] chars = "1234567890".toCharArray();
-        StringBuilder sb = new StringBuilder(12);
-        Random random = new Random();
-        for (int i = 0; i < 12; i++) {
-            char c = chars[random.nextInt(chars.length)];
-            sb.append(c);
+    public String obtenerRutaCodigo(int id) throws SQLException {
+        String ruta = null;
+        Conexion con = new Conexion();
+        Connection st = con.conectate();
+        ResultSet rs;
+        try {
+            Statement execute = st.createStatement();
+            PreparedStatement pst = st.prepareStatement("SELECT rutaCodigo FROM producto WHERE id = ?");
+
+            pst.setInt(1, id);
+            rs = pst.executeQuery();
+
+            if (rs.next()) {
+                ruta = rs.getString("rutaCodigo");
+                return ruta;
+            }
+
+        } catch (Exception e) {
+            System.err.println(e);
+            Alert dialogoAlerta = new Alert(Alert.AlertType.ERROR);
+            dialogoAlerta.setTitle("Error");
+            dialogoAlerta.setHeaderText("Ha ocurrido un error con la Base de Datos");
+            dialogoAlerta.initStyle(StageStyle.UTILITY);
+            dialogoAlerta.showAndWait();
+
         }
-        String output = sb.toString();
-        return output;
+        st.close();
+        return ruta;
+    }
+    
+    public String obtenerCodigo(String codigo) throws SQLException {
+        String codigo_barras = null;
+        Conexion con = new Conexion();
+        Connection st = con.conectate();
+        ResultSet rs;
+        try {
+            Statement execute = st.createStatement();
+            PreparedStatement pst = st.prepareStatement("SELECT codigo_barras FROM producto WHERE codigo_barras = ?");
+
+            pst.setString(1, codigo);
+            rs = pst.executeQuery();
+
+            if (rs.next()) {
+                codigo_barras = rs.getString("codigo_barras");
+                return codigo_barras;
+            }
+
+        } catch (Exception e) {
+            System.err.println(e);
+            Alert dialogoAlerta = new Alert(Alert.AlertType.ERROR);
+            dialogoAlerta.setTitle("Error");
+            dialogoAlerta.setHeaderText("Ha ocurrido un error con la Base de Datos");
+            dialogoAlerta.initStyle(StageStyle.UTILITY);
+            dialogoAlerta.showAndWait();
+
+        }
+        st.close();
+        return codigo_barras;
+    }
+    
+
+    public void eliminar(int id) throws SQLException {
+        Conexion con = new Conexion();
+        Connection st = con.conectate();
+
+        try {
+            Statement execute = st.createStatement();
+            PreparedStatement pst = st.prepareStatement("DELETE producto.* FROM producto WHERE producto.id = ?");
+
+            pst.setInt(1, id);
+
+            int res = pst.executeUpdate();
+
+            if (res > 0) {
+                Alert dialogoAlerta = new Alert(Alert.AlertType.INFORMATION);
+                dialogoAlerta.setTitle("Exito");
+                dialogoAlerta.setHeaderText("Se ha eliminado el producto");
+                dialogoAlerta.initStyle(StageStyle.UTILITY);
+                dialogoAlerta.showAndWait();
+            }
+
+        } catch (Exception e) {
+            System.err.println(e);
+            Alert dialogoAlerta = new Alert(Alert.AlertType.ERROR);
+            dialogoAlerta.setTitle("Error");
+            dialogoAlerta.setHeaderText("Ha ocurrido un error con la Base de Datos");
+            dialogoAlerta.initStyle(StageStyle.UTILITY);
+            dialogoAlerta.showAndWait();
+
+        }
+        st.close();
+
+    }
+    public void actualizarDireccion(int id, String direccion) throws SQLException{
+    Conexion con = new Conexion();
+        Connection st = con.conectate();
+
+        try {
+            Statement execute = st.createStatement();
+            PreparedStatement pst = st.prepareStatement("UPDATE producto SET rutaCodigo = ? WHERE id = ?");
+
+            pst.setString(1, direccion);
+
+            pst.setInt(2, id);
+
+            int res = pst.executeUpdate();
+
+            if (res > 0) {
+                Alert dialogoAlerta = new Alert(Alert.AlertType.INFORMATION);
+                dialogoAlerta.setTitle("Exito");
+                dialogoAlerta.setHeaderText("Se ha generado los códigos de barra con éxito");
+                dialogoAlerta.initStyle(StageStyle.UTILITY);
+                dialogoAlerta.showAndWait();
+            }
+
+        } catch (Exception e) {
+            System.err.println(e);
+            Alert dialogoAlerta = new Alert(Alert.AlertType.ERROR);
+            dialogoAlerta.setTitle("Error");
+            dialogoAlerta.setHeaderText("Ha ocurrido un error con la Base de Datos");
+            dialogoAlerta.initStyle(StageStyle.UTILITY);
+            dialogoAlerta.showAndWait();
+
+        }
+        st.close();
     }
 
 }

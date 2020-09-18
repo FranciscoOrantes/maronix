@@ -44,7 +44,7 @@
             </Button>
          </children>
       </HBox>
-      <HBox layoutX="388.0" layoutY="70.0">
+      <HBox layoutX="334.0" layoutY="71.0">
          <children>
             <Button fx:id="btnModalProveedor" mnemonicParsing="false" onAction="#abrirVentanaRegistro" text="Agregar">
                <graphic>
@@ -55,7 +55,7 @@
                   </ImageView>
                </graphic>
                <HBox.margin>
-                  <Insets right="30.0" />
+                  <Insets right="10.0" />
                </HBox.margin>
             </Button>
             <Button fx:id="btnEditar" mnemonicParsing="false" onAction="#actualizarProveedor" style="-fx-cursor: hand;" text="Editar">
@@ -67,7 +67,7 @@
                   </ImageView>
                </graphic>
                <HBox.margin>
-                  <Insets right="30.0" />
+                  <Insets right="10.0" />
                </HBox.margin>
             </Button>
             <Button fx:id="btnBaja" mnemonicParsing="false" onAction="#bajaProveedores" prefWidth="109.0" style="-fx-cursor: hand;" text="Dar de baja">
@@ -78,10 +78,22 @@
                      </image>
                   </ImageView>
                </graphic>
+               <HBox.margin>
+                  <Insets right="10.0" />
+               </HBox.margin>
+            </Button>
+            <Button fx:id="btnEliminar" mnemonicParsing="false" onAction="#eliminar" style="-fx-cursor: hand;" text="Eliminar">
+               <graphic>
+                  <ImageView fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Imagenes/basura.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
             </Button>
          </children>
       </HBox>
-      <Text fill="#4f78b7" layoutX="342.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PROVEEDORES">
+      <Text fill="#ce93d8" layoutX="342.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Proveedores">
          <font>
             <Font name="Segoe UI Bold" size="24.0" />
          </font>

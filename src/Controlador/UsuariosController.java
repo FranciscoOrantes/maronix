@@ -14,6 +14,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
@@ -25,7 +27,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -34,6 +38,7 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 /**
  * FXML Controller class
@@ -46,7 +51,8 @@ public class UsuariosController implements Initializable {
     public Button btnModalUsuario;
     static Stage ventanaInicio;
     static FXMLLoader loaderInicioAdmin;
-
+    @FXML
+    private Button btnEliminar;
     @FXML
     private TableView<Usuarios> tablaUsuarios;
     @FXML
@@ -81,9 +87,31 @@ public class UsuariosController implements Initializable {
         // TODO
         usuarios = FXCollections.observableArrayList();
         EnviarConEnter();
-        this.inicializarTablaUsuarios();
+        try {
+            this.inicializarTablaUsuarios();
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuariosController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         btnEditar.setDisable(true);
         btnBaja.setDisable(true);
+        btnEliminar.setDisable(true);
+        TimerTask timerTask = new TimerTask() {
+            public void run() {
+                try {
+                    inicializarTablaUsuarios();
+                } catch (SQLException ex) {
+                    Logger.getLogger(UsuariosController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                btnEditar.setDisable(true);
+                btnBaja.setDisable(true);
+                btnEliminar.setDisable(true);
+            }
+        };
+
+        // Aquí se pone en marcha el timer cada segundo. 
+        Timer timer = new Timer();
+        // Dentro de 0 milisegundos avísame cada 1 minutos 
+        timer.scheduleAtFixedRate(timerTask, 0, 15000);
     }
 
     public void abrirVentanaRegistro() throws IOException {
@@ -97,7 +125,7 @@ public class UsuariosController implements Initializable {
         ventanaInicio.show();
     }
 
-    public void inicializarTablaUsuarios() {
+    public void inicializarTablaUsuarios() throws SQLException {
         usuarios = FXCollections.observableArrayList();
         Usuarios.llenarInfoUsuarios(usuarios);
         tablaUsuarios.setItems(usuarios);
@@ -149,6 +177,7 @@ public class UsuariosController implements Initializable {
     public void seleccionUsuario() {
         btnEditar.setDisable(false);
         btnBaja.setDisable(false);
+        btnEliminar.setDisable(false);
         Usuarios usuario = tablaUsuarios.getSelectionModel().getSelectedItem();
         id = usuario.getId();
         nombre = usuario.getNombreT();
@@ -175,13 +204,31 @@ public class UsuariosController implements Initializable {
         }
         btnEditar.setDisable(true);
         btnBaja.setDisable(true);
+        btnEliminar.setDisable(true);
 
     }
 
-    public void cleanSelect() {
+    public void cleanSelect() throws SQLException {
         btnEditar.setDisable(true);
         btnBaja.setDisable(true);
+        btnEliminar.setDisable(true);
         tablaUsuarios.getSelectionModel().clearSelection();
         inicializarTablaUsuarios();
+    }
+    public void eliminar() throws SQLException{
+    Alert dialogoAlerta = new Alert(Alert.AlertType.CONFIRMATION, "Confirmación de eliminado de usuario", ButtonType.YES, ButtonType.NO);
+        dialogoAlerta.setTitle("Advertencia");
+        dialogoAlerta.setHeaderText("SE ELIMINARÁ EL USUARIO SELECCIONADO");
+        dialogoAlerta.setContentText("Si desea continuar el usuario quedará eliminado");
+        dialogoAlerta.initStyle(StageStyle.UTILITY);
+        dialogoAlerta.showAndWait();
+        if (dialogoAlerta.getResult() == ButtonType.YES) {
+            Usuarios usuario = new Usuarios();
+            usuario.eliminar(id);
+            inicializarTablaUsuarios();
+            cleanSelect();
+        } else {
+            cleanSelect();
+        }
     }
 }

@@ -4,7 +4,7 @@
   -fx-background-color: transparent;
 }
 .text-field:focused {
-    -fx-border-color: #059DC0;
+    -fx-border-color: #ce93d8;
     -fx-border-width: 0 0 2 0; 
   -fx-background-color: transparent;
 }

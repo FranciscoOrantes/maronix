@@ -6,6 +6,14 @@
 package Controlador;
 
 import Modelo.InicioSesion;
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.pdf.Barcode128;
+import com.itextpdf.text.pdf.BarcodeEAN;
+import com.itextpdf.text.pdf.PdfWriter;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -27,6 +35,7 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
+import maronix.MaronIX;
 
 /**
  * FXML Controller class
@@ -65,6 +74,7 @@ public class InicioSesionController implements Initializable {
             txtUsuario.setText("");
             txtPassword.setText("");
         }
+        
 
     }
 

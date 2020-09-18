@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="158" pageHeight="600" columnWidth="118" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4a70272f-03f2-4368-a00d-4d3668ee449e">
 	<property name="ireport.zoom" value="3.452271214393106"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="124"/>
+	<property name="ireport.y" value="66"/>
 	<subDataset name="dataset1" uuid="4fed6268-cc15-4d32-8f12-af0af241248b">
 		<field name="_THIS" class="java.lang.Integer"/>
 	</subDataset>
@@ -29,7 +29,7 @@
 	<title>
 		<band height="79" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="12" width="118" height="12" uuid="fa8ac310-f95b-49b4-bf42-f451dcc5d00d"/>
+				<reportElement x="0" y="17" width="118" height="12" uuid="fa8ac310-f95b-49b4-bf42-f451dcc5d00d"/>
 				<textElement>
 					<font size="6"/>
 				</textElement>
@@ -43,40 +43,44 @@
 				<textFieldExpression><![CDATA[$P{fechahora}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="24" width="118" height="10" uuid="1ee80852-e2aa-4c14-954f-1ecca07a89ee"/>
+				<reportElement x="0" y="29" width="118" height="10" uuid="1ee80852-e2aa-4c14-954f-1ecca07a89ee"/>
+				<textElement>
+					<font size="4"/>
+				</textElement>
+				<text><![CDATA[AV. CENTRAL NORTE 118 BIS ENTRE 17 Y 19 LIB SUR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="59" width="118" height="10" uuid="3602abf9-62bb-4500-8341-12a440c82467"/>
 				<textElement>
 					<font size="6"/>
 				</textElement>
-				<text><![CDATA[5TA CALLE ORIENTE SN CENTRO]]></text>
+				<text><![CDATA[maronix2020@gmail.com]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="54" width="118" height="10" uuid="3602abf9-62bb-4500-8341-12a440c82467"/>
-				<textElement>
-					<font size="6"/>
-				</textElement>
-				<text><![CDATA[dfiscad_arcen@hotmail.com]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="0" y="0" width="118" height="12" uuid="028f513c-5acd-4251-ad2f-8c02e01fbb67"/>
+				<reportElement x="44" y="0" width="43" height="17" uuid="028f513c-5acd-4251-ad2f-8c02e01fbb67"/>
 				<textElement textAlignment="Center">
 					<font size="6"/>
 				</textElement>
 				<text><![CDATA[MARONIX]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="34" width="118" height="10" uuid="8202ec58-9237-42d7-b7ac-44aa7cffeb42"/>
+				<reportElement x="0" y="39" width="118" height="10" uuid="8202ec58-9237-42d7-b7ac-44aa7cffeb42"/>
 				<textElement>
-					<font size="6"/>
+					<font size="5"/>
 				</textElement>
-				<text><![CDATA[FRONTERA HIDALGO CHIAPAS MÉXICO]]></text>
+				<text><![CDATA[TAPACHULA DE CÓRDOVA Y ORDOÑEZ CHIS]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="44" width="118" height="10" uuid="c512ac27-8a41-46d9-b0e5-8c3c445665c5"/>
+				<reportElement x="0" y="49" width="118" height="10" uuid="c512ac27-8a41-46d9-b0e5-8c3c445665c5"/>
 				<textElement textAlignment="Center">
 					<font size="6"/>
 				</textElement>
 				<text><![CDATA[TEL 962 707 4090]]></text>
 			</staticText>
+			<image>
+				<reportElement x="1" y="0" width="43" height="17" uuid="d7b144e3-977c-4ae0-9221-d30031fe20c8"/>
+				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
+			</image>
 		</band>
 	</title>
 	<pageHeader>
@@ -153,7 +157,7 @@
 						<textField>
 							<reportElement x="0" y="0" width="50" height="12" uuid="ec25d95e-49ca-4bd3-afd3-39f5dd5e4015"/>
 							<textElement>
-								<font size="6"/>
+								<font size="5"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$F{_THIS}]]></textFieldExpression>
 						</textField>

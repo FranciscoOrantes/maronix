@@ -43,7 +43,7 @@ public class InicioSesion {
     private String password;
     private String passwordDes;
     private String llave_secreta = "KirtronSoluciones";
-     String path = "/Imagenes/icono.png";
+     String path = "/Imagenes/icono.jpeg";
 
     public String getUsuario() {
         return usuario;

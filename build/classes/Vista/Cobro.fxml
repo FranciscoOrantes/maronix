@@ -23,8 +23,11 @@
             <Font name="Segoe UI Bold" size="14.0" />
          </font></Text>
       <Text fx:id="cambioText" layoutX="80.0" layoutY="195.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="141.0" />
-      <Button layoutX="71.0" layoutY="228.0" mnemonicParsing="false" onAction="#imprimirTicket" style="-fx-cursor: hand;" text="Imprimir ticket" />
-      <Text fill="#4f78b7" layoutX="79.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="VENTA">
+      <Button layoutX="71.0" layoutY="228.0" mnemonicParsing="false" onAction="#imprimirTicket" style="-fx-cursor: hand; -fx-background-color: #ce93d8;" text="Imprimir ticket" textFill="WHITE">
+         <font>
+            <Font name="Segoe UI Bold" size="12.0" />
+         </font></Button>
+      <Text fill="#ce93d8" layoutX="79.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="VENTA">
          <font>
             <Font name="Segoe UI Bold" size="24.0" />
          </font>

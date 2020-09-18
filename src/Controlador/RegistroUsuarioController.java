@@ -102,13 +102,15 @@ public class RegistroUsuarioController implements Initializable {
             pass.setText("");
             comboTipos.valueProperty().set(null);
             btnRegistrar.setDisable(true);
+            Node source = (Node) event.getSource();
+            Stage stage = (Stage) source.getScene().getWindow();
+            stage.close();
             if (InicioSesionController.ventanaOrigen.equals("InicioSesion")) {
-                Node source = (Node) event.getSource();
-                Stage stage = (Stage) source.getScene().getWindow();
+
                 stage.close();
 
                 loaderInicioAdmin = new FXMLLoader(getClass().getResource("/Vista/InicioSesion.fxml"));
-                
+
                 Parent root1 = (Parent) loaderInicioAdmin.load();
                 ventanaInicio = new Stage();
                 RegistroUsuarioController.ventanaInicio.getIcons().add(new Image(String.valueOf(getClass().getResource(path))));

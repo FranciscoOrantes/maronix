@@ -7,10 +7,13 @@ package Controlador;
 
 import Modelo.Productos;
 import Modelo.Proveedores;
+import Modelo.Reportes;
 import Modelo.Usuarios;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -34,7 +37,7 @@ import javafx.stage.StageStyle;
  * @author Francisco
  */
 public class RegistroProductoController implements Initializable {
-
+    
     @FXML
     public TextArea descripcionTxt;
     @FXML
@@ -50,37 +53,46 @@ public class RegistroProductoController implements Initializable {
     @FXML
     public Text tituloProducto;
 
-    private int idProveedor;
+    private int idProveedor = 0;
     private ArrayList<String> proveedores;
     private ArrayList<Integer> idProveedores;
     private int posicionCombo;
+    private String codigo;
+    private String codigoBd;
+    private int numero = 1;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        tituloProducto.setText(ProductosController.tituloText);
-        btnRegistrar.setText(ProductosController.tituloBoton);
+        
         proveedores = new ArrayList<String>();
         idProveedores = new ArrayList<Integer>();
         llenarDatosProveedor();
         combProveedor.getItems().addAll(proveedores);
         combProveedor.setValue(ProductosController.tituloCombo);
-        if (tituloProducto.getText().equals("Actualizar Producto")) {
-
-            descripcionTxt.setText(ProductosController.descripcion);
-            precioTxt.setText(String.valueOf(ProductosController.precio));
-            cantidadTxt.setText(String.valueOf(ProductosController.cantidad));
-
-            btnLimpiar.setVisible(false);
-
-        }
+        
+        
 
     }
 
-    public void registrar(Event event) throws SQLException {
-        if (btnRegistrar.getText().equals("Registrar")) {
+    public String generarCodigoBarras(int numero) {
+        char[] chars = "1234567890".toCharArray();
+        StringBuilder sb = new StringBuilder(13);
+        Random random = new Random();
+        
+        sb.append(numero);
+        for (int i = 0; i < 13; i++) {
+            char c = chars[random.nextInt(chars.length)];
+            sb.append(c);
+        }
+        String output = sb.toString();
+        return output;
+    }
+
+    public void registrar(Event event) throws SQLException, IOException {
+        
             if (descripcionTxt.getText().equals("")
                     || precioTxt.getText().equals("") || cantidadTxt.getText().equals("")) {
                 Alert dialogoAlerta = new Alert(Alert.AlertType.WARNING);
@@ -88,46 +100,51 @@ public class RegistroProductoController implements Initializable {
                 dialogoAlerta.setHeaderText("Campos No validos!");
                 dialogoAlerta.initStyle(StageStyle.UTILITY);
                 dialogoAlerta.showAndWait();
+            } else if (idProveedor == 0) {
+                Alert dialogoAlerta = new Alert(Alert.AlertType.WARNING);
+                dialogoAlerta.setTitle("Advertencia");
+                dialogoAlerta.setHeaderText("NO HA SELECCIONADO AL PROVEEDOR");
+                dialogoAlerta.setContentText("Favor de seleccionar a un proveedor o en su caso registrar uno nuevo");
+                dialogoAlerta.initStyle(StageStyle.UTILITY);
+                dialogoAlerta.showAndWait();
             } else {
-                Productos producto = new Productos();
+                verificacion(event);
 
-                producto.setDescripcion(descripcionTxt.getText());
-                producto.setPrecio(Double.valueOf(precioTxt.getText()));
-                producto.setCantidad(Integer.valueOf(cantidadTxt.getText()));
-           
+            }
+       
+    }
 
-                producto.setIdProveedor(idProveedor);
-                producto.registrarProductos();
+    public void verificacion(Event event) throws IOException, SQLException {
+        Productos producto = new Productos();
+
+        producto.setDescripcion(descripcionTxt.getText());
+        producto.setPrecio(Double.valueOf(precioTxt.getText()));
+        producto.setCantidad(Integer.valueOf(cantidadTxt.getText()));
+
+        codigo = generarCodigoBarras(numero); //123456
+        codigoBd = producto.obtenerCodigo(codigo);//123456
+        while (codigo.equals(codigoBd)){
+       
+        codigo = generarCodigoBarras(numero);
+        codigoBd = producto.obtenerCodigo(codigo);
+        }
+        producto.setIdProveedor(idProveedor);
+        Node source = (Node) event.getSource();
+        Stage stage = (Stage) source.getScene().getWindow();
+        Reportes reporte = new Reportes();
+        boolean opcion;
+        opcion = reporte.generarCodigoDeBarrasDinamicos(codigo, descripcionTxt.getText(), Integer.parseInt(cantidadTxt.getText()), stage,producto,Double.parseDouble(precioTxt.getText()));
+        if (opcion) {
+            if (Productos.respuesta.equals("Si") || Productos.respuesta.equals("No")) {
+                stage.close();
+                
             }
         } else {
-            actualizar(event);
+            verificacion(event);
         }
     }
 
-    public void actualizar(Event event) throws SQLException {
-        if (descripcionTxt.getText().equals("")
-                || precioTxt.getText().equals("") || cantidadTxt.getText().equals("")) {
-            Alert dialogoAlerta = new Alert(Alert.AlertType.WARNING);
-            dialogoAlerta.setTitle("Advertencia");
-            dialogoAlerta.setHeaderText("Campos No validos!");
-            dialogoAlerta.initStyle(StageStyle.UTILITY);
-            dialogoAlerta.showAndWait();
-        } else {
-            posicionCombo = proveedores.indexOf(combProveedor.getValue().toString());
-            idProveedor = idProveedores.get(posicionCombo);
-           
-            String descripcion = descripcionTxt.getText();
-           
-            Double precio = Double.parseDouble(precioTxt.getText());
-            int cantidad = Integer.parseInt(cantidadTxt.getText());
-         
-            Productos producto = new Productos();
-            producto.actualizar(ProductosController.id, descripcion, precio, cantidad, idProveedor);
-            Node source = (Node) event.getSource();
-            Stage stage = (Stage) source.getScene().getWindow();
-            stage.close();
-        }
-    }
+   
 
     public void llenarDatosProveedor() {
         proveedores = new ArrayList<String>();
@@ -160,7 +177,7 @@ public class RegistroProductoController implements Initializable {
     }
 
     public void limpiar() {
-        
+
         descripcionTxt.setText("");
         precioTxt.setText("");
         cantidadTxt.setText("");

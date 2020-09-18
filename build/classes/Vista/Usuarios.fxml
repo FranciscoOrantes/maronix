@@ -14,7 +14,7 @@
 
 <AnchorPane id="AnchorPane" onMouseClicked="#cleanSelect" prefHeight="535.0" prefWidth="792.0" stylesheets="@../styles/login.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controlador.UsuariosController">
    <children>
-      <TableView fx:id="tablaUsuarios" layoutX="86.0" layoutY="107.0" onMouseClicked="#seleccionUsuario" prefHeight="368.0" prefWidth="636.0" AnchorPane.bottomAnchor="63.0" AnchorPane.leftAnchor="86.0" AnchorPane.rightAnchor="70.0" AnchorPane.topAnchor="107.0">
+      <TableView fx:id="tablaUsuarios" layoutX="38.0" layoutY="105.0" onMouseClicked="#seleccionUsuario" prefHeight="376.0" prefWidth="717.0" AnchorPane.bottomAnchor="58.0" AnchorPane.leftAnchor="38.0" AnchorPane.rightAnchor="37.0" AnchorPane.topAnchor="105.0">
         <columns>
           <TableColumn fx:id="nombreCol" prefWidth="182.0" text="Nombre" />
           <TableColumn fx:id="apellido_paternoCol" prefWidth="149.0" text="Apellido Paterno" />
@@ -27,7 +27,7 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <HBox layoutX="86.0" layoutY="69.0" prefHeight="28.0" prefWidth="277.0" AnchorPane.bottomAnchor="441.0" AnchorPane.leftAnchor="86.0" AnchorPane.rightAnchor="429.0" AnchorPane.topAnchor="69.0">
+      <HBox layoutX="38.0" layoutY="70.0" prefHeight="28.0" prefWidth="277.0" AnchorPane.bottomAnchor="440.0" AnchorPane.leftAnchor="38.0" AnchorPane.rightAnchor="477.0" AnchorPane.topAnchor="70.0">
          <children>
             <TextField fx:id="txtBusqueda" onKeyReleased="#buscarUsuarios" prefHeight="25.0" prefWidth="191.0" promptText="Nombre">
                <HBox.margin>
@@ -47,7 +47,7 @@
             </Button>
          </children>
       </HBox>
-      <HBox layoutX="408.0" layoutY="69.0" prefHeight="28.0" prefWidth="314.0" AnchorPane.bottomAnchor="441.0" AnchorPane.leftAnchor="408.0" AnchorPane.rightAnchor="70.0" AnchorPane.topAnchor="69.0">
+      <HBox layoutX="331.0" layoutY="71.0" prefHeight="29.0" prefWidth="424.0" AnchorPane.bottomAnchor="438.0" AnchorPane.leftAnchor="331.0" AnchorPane.rightAnchor="37.0" AnchorPane.topAnchor="71.0">
          <children>
             <Button fx:id="btnModalUsuario" mnemonicParsing="false" onAction="#abrirVentanaRegistro" style="-fx-cursor: hand;" text="Agregar">
                <graphic>
@@ -82,12 +82,21 @@
                   </ImageView>
                </graphic>
                <HBox.margin>
-                  <Insets />
+                  <Insets right="25.0" />
                </HBox.margin>
+            </Button>
+            <Button fx:id="btnEliminar" mnemonicParsing="false" onAction="#eliminar" style="-fx-cursor: hand;" text="Eliminar">
+               <graphic>
+                  <ImageView fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Imagenes/basura.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
             </Button>
          </children>
       </HBox>
-      <Text fill="#4f78b7" layoutX="361.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="USUARIOS">
+      <Text fill="#ce93d8" layoutX="348.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Usuarios">
          <font>
             <Font name="Segoe UI Bold" size="24.0" />
          </font>

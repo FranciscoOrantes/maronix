@@ -16,11 +16,11 @@
       <AnchorPane prefHeight="400.0" prefWidth="300.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER_LEFT">
          <children>
             <TextField fx:id="txtUsuario" alignment="TOP_LEFT" layoutX="80.0" layoutY="151.0" promptText="usuario" styleClass="text-field" />
-            <Button fx:id="btnInicio" layoutX="80.0" layoutY="257.0" mnemonicParsing="false" onAction="#iniciarSesion" prefHeight="27.0" prefWidth="149.0" style="-fx-background-color: #199CB6; -fx-cursor: hand;" text="Iniciar sesion" textFill="#fffefe">
+            <Button fx:id="btnInicio" layoutX="80.0" layoutY="257.0" mnemonicParsing="false" onAction="#iniciarSesion" prefHeight="27.0" prefWidth="149.0" style="-fx-background-color: #ce93d8; -fx-cursor: hand;" text="Iniciar sesion" textFill="#fffefe">
                <font>
                   <Font name="Segoe UI Bold" size="12.0" />
                </font></Button>
-            <Text fill="#0351a2" layoutX="80.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Iniciar Sesión">
+            <Text fill="#ce93d8" layoutX="80.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Iniciar Sesión">
                <font>
                   <Font name="Segoe UI Bold Italic" size="24.0" />
                </font>

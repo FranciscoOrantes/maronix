@@ -66,6 +66,8 @@ public class VentasController implements Initializable {
     private Text importeText;
     @FXML
     private Button btnCancelarVenta;
+    @FXML
+    private Button btnEliminarProducto;
     public static ObservableList<Productos> productos;
     public static int cantidad;
     private String codigo;
@@ -87,6 +89,7 @@ public class VentasController implements Initializable {
         cantidadProductos = new ArrayList<Integer>();
         precioProductos = new ArrayList<Double>();
         btnCancelarVenta.setDisable(true);
+        btnEliminarProducto.setDisable(true);
     }
 
     public void agregarProducto() throws SQLException {
@@ -160,7 +163,12 @@ public class VentasController implements Initializable {
 
         ventanaInicio.show();
     }
-
+    public void seleccionarProducto(){
+    btnEliminarProducto.setDisable(false);
+    }
+    public void cleanSelect(){
+    btnEliminarProducto.setDisable(true);
+    }
     public void eliminarProducto() {
         cantidad = Integer.parseInt(cantidadText.getText());
         int index = tablaVenta.getSelectionModel().getSelectedIndex();

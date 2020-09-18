@@ -31,20 +31,20 @@
          <font>
             <Font name="Segoe UI" size="12.0" />
          </font></PasswordField>
-      <Button fx:id="btnRegistrar" layoutX="142.0" layoutY="455.0" mnemonicParsing="false" onAction="#registrar" prefHeight="33.0" prefWidth="114.0" style="-fx-cursor: hand;" text="Registrar">
+      <Button fx:id="btnRegistrar" layoutX="142.0" layoutY="455.0" mnemonicParsing="false" onAction="#registrar" prefHeight="33.0" prefWidth="114.0" style="-fx-cursor: hand; -fx-background-color: #ce93d8;" text="Registrar" textFill="WHITE">
          <font>
-            <Font name="Segoe UI" size="12.0" />
+            <Font name="Segoe UI Bold" size="12.0" />
          </font>
       </Button>
-      <Button fx:id="btnLimpiar" layoutX="295.0" layoutY="455.0" mnemonicParsing="false" onAction="#limpiar" prefHeight="33.0" prefWidth="114.0" style="-fx-cursor: hand;" text="Limpiar">
+      <Button fx:id="btnLimpiar" layoutX="295.0" layoutY="455.0" mnemonicParsing="false" onAction="#limpiar" prefHeight="33.0" prefWidth="114.0" style="-fx-cursor: hand; -fx-background-color: #ce93d8;" text="Limpiar" textFill="WHITE">
          <font>
-            <Font name="Segoe UI" size="12.0" />
+            <Font name="Segoe UI Bold" size="12.0" />
          </font>
          <effect>
             <ColorAdjust />
          </effect>
       </Button>
-      <Text fill="#4f78b7" layoutX="132.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Registrar usuario">
+      <Text fill="#ce93d8" layoutX="132.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Registrar usuario">
          <font>
             <Font name="Segoe UI Bold" size="22.0" />
          </font>

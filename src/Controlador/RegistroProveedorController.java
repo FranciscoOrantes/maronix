@@ -86,6 +86,9 @@ public class RegistroProveedorController implements Initializable {
                 direccionTxt.setText("");
                 telefonoTxt.setText("");
                 correoTxt.setText("");
+                Node source = (Node) event.getSource();
+                Stage stage = (Stage) source.getScene().getWindow();
+                stage.close();
             }
         } else {
             actualizar(event);
@@ -107,7 +110,7 @@ public class RegistroProveedorController implements Initializable {
             correo = correoTxt.getText();
             Proveedores proveedor = new Proveedores();
             proveedor.actualizar(ProveedoresController.idProveedor, razon_social, direccion, telefono, correo);
-             Node source = (Node) event.getSource();
+            Node source = (Node) event.getSource();
             Stage stage = (Stage) source.getScene().getWindow();
             stage.close();
         }

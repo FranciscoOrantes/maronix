@@ -277,7 +277,7 @@ public class Usuarios {
         dialogoAlerta.showAndWait();
     }
 
-    public static void llenarInfoUsuarios(ObservableList<Usuarios> lista) {
+    public static void llenarInfoUsuarios(ObservableList<Usuarios> lista) throws SQLException {
         Conexion con = new Conexion();
         Connection st = con.conectate();
         ResultSet rs;
@@ -308,6 +308,7 @@ public class Usuarios {
             System.err.println("excetpcion " + e);
 
         }
+         st.close();
     }
     public void actualizar(int id, String nombre, String apellidoPaterno, String apellidoMaterno,String usuario, String rol) throws SQLException{
     Conexion con = new Conexion();
@@ -441,5 +442,37 @@ public class Usuarios {
             dialogoAlerta.showAndWait();
         }
         st.close();
+    }
+    public void eliminar(int id) throws SQLException {
+        Conexion con = new Conexion();
+        Connection st = con.conectate();
+
+        try {
+            Statement execute = st.createStatement();
+            PreparedStatement pst = st.prepareStatement("DELETE usuario.* FROM usuario WHERE usuario.id = ?");
+
+            pst.setInt(1, id);
+
+            int res = pst.executeUpdate();
+
+            if (res > 0) {
+                Alert dialogoAlerta = new Alert(Alert.AlertType.INFORMATION);
+                dialogoAlerta.setTitle("Exito");
+                dialogoAlerta.setHeaderText("Se ha eliminado el usuario");
+                dialogoAlerta.initStyle(StageStyle.UTILITY);
+                dialogoAlerta.showAndWait();
+            }
+
+        } catch (Exception e) {
+            System.err.println(e);
+            Alert dialogoAlerta = new Alert(Alert.AlertType.ERROR);
+            dialogoAlerta.setTitle("Error");
+            dialogoAlerta.setHeaderText("Ha ocurrido un error con la Base de Datos");
+            dialogoAlerta.initStyle(StageStyle.UTILITY);
+            dialogoAlerta.showAndWait();
+
+        }
+        st.close();
+
     }
 }

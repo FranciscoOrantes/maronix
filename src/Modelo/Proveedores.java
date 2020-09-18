@@ -138,7 +138,7 @@ public class Proveedores {
 
     }
 
-    public static void llenarInfoProveedores(ObservableList<Proveedores> lista) {
+    public static void llenarInfoProveedores(ObservableList<Proveedores> lista) throws SQLException {
         Conexion con = new Conexion();
         Connection st = con.conectate();
         ResultSet rs;
@@ -168,6 +168,7 @@ public class Proveedores {
             System.err.println("excetpcion " + e);
 
         }
+        st.close();
 
     }
 
@@ -221,6 +222,7 @@ public class Proveedores {
             System.err.println("excetpcion " + e);
 
         }
+      
     }
 
     public void actualizar() throws SQLException {
@@ -390,5 +392,35 @@ public class Proveedores {
         }
         st.close();
     }
-    
+    public void eliminar(int id) throws SQLException{
+    Conexion con = new Conexion();
+        Connection st = con.conectate();
+
+        try {
+            Statement execute = st.createStatement();
+            PreparedStatement pst = st.prepareStatement("DELETE proveedor.* FROM proveedor WHERE proveedor.id = ?");
+
+            pst.setInt(1, id);
+
+            int res = pst.executeUpdate();
+
+            if (res > 0) {
+                Alert dialogoAlerta = new Alert(Alert.AlertType.INFORMATION);
+                dialogoAlerta.setTitle("Exito");
+                dialogoAlerta.setHeaderText("Se ha eliminado el proveedor");
+                dialogoAlerta.initStyle(StageStyle.UTILITY);
+                dialogoAlerta.showAndWait();
+            }
+
+        } catch (Exception e) {
+            System.err.println(e);
+            Alert dialogoAlerta = new Alert(Alert.AlertType.ERROR);
+            dialogoAlerta.setTitle("Error");
+            dialogoAlerta.setHeaderText("Ha ocurrido un error con la Base de Datos");
+            dialogoAlerta.initStyle(StageStyle.UTILITY);
+            dialogoAlerta.showAndWait();
+
+        }
+        st.close();
+    }
 }

@@ -2,17 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/C:/Users/Francisco/Documents/NetBeansProjects/MaronIX/src/Controlador/VentanaInicialController.java</file>
-            <file>file:/C:/Users/Francisco/Documents/NetBeansProjects/MaronIX/src/Modelo/Ventas.java</file>
-            <file>file:/C:/Users/Francisco/Documents/NetBeansProjects/MaronIX/src/Reportes/ticket.jrxml</file>
-            <file>file:/C:/Users/Francisco/Documents/NetBeansProjects/MaronIX/src/Controlador/ProductosController.java</file>
-            <file>file:/C:/Users/Francisco/Documents/NetBeansProjects/MaronIX/src/Modelo/Productos.java</file>
-            <file>file:/C:/Users/Francisco/Documents/NetBeansProjects/MaronIX/src/Controlador/CobroController.java</file>
-            <file>file:/C:/Users/Francisco/Documents/NetBeansProjects/MaronIX/src/Controlador/VentasController.java</file>
-            <file>file:/C:/Users/Francisco/Documents/NetBeansProjects/MaronIX/src/Modelo/ImporteLetra.java</file>
-            <file>file:/C:/Users/Francisco/Documents/NetBeansProjects/MaronIX/src/Reportes/codigo_barras.jrxml</file>
-            <file>file:/C:/Users/Francisco/Documents/NetBeansProjects/MaronIX/src/Modelo/Reportes.java</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>
